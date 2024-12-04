@@ -9,3 +9,4 @@ The `backEnd` folder contains the core backend code for the project. It is organ
 - **model/**: Defines data structures.
 - **util/**: Provides utility methods for common tasks.
 - **config/**: Manages application configuration settings.
+
