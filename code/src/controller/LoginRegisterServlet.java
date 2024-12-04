@@ -1,7 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
-import service.UserService;
+import services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
