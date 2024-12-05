@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.csci201y24FP</groupId>
-    <artifactId>traderView</artifactId>
+    <artifactId>tradViewer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
