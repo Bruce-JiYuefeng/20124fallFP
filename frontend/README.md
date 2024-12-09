@@ -10,6 +10,4 @@ How to see the page:
 make sure you have vite and react installed
 
 for backend group:
-1. run npm run build
-2. the code will be generated under the folder dist/
-3. copy everything inside dist/ to static/ folder in backend project.
+1. go to vite.gonfig.js and change the port number to your tomcat port. 

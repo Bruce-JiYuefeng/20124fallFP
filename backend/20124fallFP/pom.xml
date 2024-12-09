@@ -52,5 +52,13 @@
       <version>4.0.1</version>
       <scope>provided</scope> <!-- Provided scope since it's available in the servlet container -->
     </dependency>
+    
+    <!-- Jakarta Servlet API for Tomcat 10 -->
+    <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>5.0.0</version> <!-- for tomcat 10 -->
+        <scope>provided</scope> <!-- it will be provided by tomcat -->
+    </dependency>
   </dependencies>
 </project>

@@ -1,10 +1,10 @@
-// Registration.jsx
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Registration() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
     confirmPassword: ''
   });
@@ -17,11 +17,6 @@ function Registration() {
 
     if (!formData.username.trim()) {
       newErrors.username = 'Username is required';
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
     }
 
     if (formData.password.length < 6) {
@@ -58,47 +53,44 @@ function Registration() {
 
     try {
       setLoading(true);
-      
-      const response = await fetch('/api/register', {
+      setServerError('');
+
+      const response = await fetch('/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
       const data = await response.json();
-      
+
       if (data.status === "success") {
-        window.location.href = '/login';
+        navigate('/login');
       } else {
         throw new Error(data.message);
       }
-      
-    } 
-    catch (err) {
+    } catch (err) {
       setServerError(err.message);
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-96 bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
+      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">Create an Account</h2>
         
         {serverError && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
             {serverError}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Username</label>
@@ -114,23 +106,6 @@ function Registration() {
             />
             {errors.username && (
               <p className="text-sm text-red-500 mt-1">{errors.username}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`w-full p-2 border rounded focus:outline-none focus:ring-2 ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              }`}
-              disabled={loading}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
 
@@ -182,12 +157,12 @@ function Registration() {
 
           <p className="text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <a
-              href="/login"
-              className="text-blue-600 hover:underline"
+            <span
+              onClick={() => navigate('/login')}
+              className="text-blue-600 hover:underline cursor-pointer"
             >
               Login here
-            </a>
+            </span>
           </p>
         </form>
       </div>
